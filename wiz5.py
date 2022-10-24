@@ -1,4 +1,4 @@
-from re import X
+
 from faker import Faker
 class BaseContact:
    def __init__(self, name, surname, phone, email):
@@ -54,4 +54,3 @@ for i in range(x):
 
 #def create_contacts():
 
-200
