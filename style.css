@@ -1,0 +1,14 @@
+
+
+h1 {
+    color: white;
+    background: black;
+
+}
+h2 {
+    color:brown;
+    font-size: 22px;
+}
+.lista {
+    list-style-type: disc;
+}
