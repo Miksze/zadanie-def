@@ -1,24 +1,29 @@
 
+
 from faker import Faker
+
 class BaseContact:
-   def __init__(self, name, surname, phone, email):
+    def __init__(self, name, surname, phone, email):
        self.name = name
        self.surname = surname
        self.phone = phone
        self.email = email
-   def __repr__(self):
+
+    def __repr__(self):
        return f"\n\twizytówka:\nimię: {self.name}\nnazwisko: {self.surname}\nTelefon {self.phone}\nemail: {self.email}"
 
-   def contact(self):
+    def contact(self):
        print(f" Wizytówka priv - wybieram numer {self.phone} i dzwonię do {self.name} {self.surname}")
-   @property
-   def licz(self):
+
+    @property
+    def licz(self):
        return f"liczę długość imienia: {self.name} :{len(self.name)}"
 
-#    @licz.setter
-#    def licz(self, value):
-#         self.__name=value
-        # len(self.__name)
+    @property
+    def label_length(self):
+        return len(self.name) + len(self.surname)
+
+
 
 class BusinessContact(BaseContact):
    def __init__(self, firm, position, phone2, *args, **kwargs):
@@ -33,24 +38,19 @@ class BusinessContact(BaseContact):
    def contact(self):
        print(f"Wybieram numer {self.phone2} i dzwonię do {self.name} {self.surname}")
 
-  
+def create_contacts(card_type="base", n=2):
+    cards = []
 
-card = BaseContact(name="Jacek", surname="Wójcik", phone="+ 48 700 111 222", email="jw@pol.pl")
-card2 = BusinessContact( name="Genowefa", surname="Kowalska", phone="111 111 111", email="jjj@ww.po", firm="driver", position="kupiec", phone2="222 222 222" )
+    for i in range(n):
+        if card_type == "base":
+            c = BaseContact(name=faker.first_name(), surname=faker.last_name(), phone=faker.phone_number(), email=faker.email())
+        else:
+            c = BusinessContact( name=faker.first_name(), surname=faker.last_name(), phone=faker.phone_number(), email=faker.email(), firm=faker.company(), position=faker.job(),  phone2=faker.phone_number())
+        cards.append(c)
+        print(f'Długość imienia i nazwiska w wizytówce : '+ str(c.label_length))
+    return cards
 
-BaseContact.contact(card)
-BusinessContact.contact(card2)
-print(card.licz)
-print(card2.licz)
-
-faker = Faker()
-x = int(input("jaką ilość wizytówek wygenerować (podaj wartość) : "))
-y = int(input("wybierz rodzaj: 1 - BaseContact, 2 - BusinessContact : "))
-for i in range(x):
-    if y == 2:
-      print(BusinessContact( name=faker.first_name(), surname=faker.last_name(), phone=faker.phone_number(), email=faker.email(), firm=faker.company(), position=faker.job(),  phone2=faker.phone_number()))
-    else:
-      print(BaseContact(name=faker.first_name(), surname=faker.last_name(), phone=faker.phone_number(), email=faker.email()))
-
-#def create_contacts():
+faker = Faker("pl_PL")
+x = create_contacts()
+print(x)
 
